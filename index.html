@@ -101,6 +101,31 @@
             flex-wrap: wrap;
         }
 
+        .btn-website {
+            padding: 0.5rem 1.25rem;
+            border-radius: 60px;
+            border: 1.5px solid #2563eb;
+            background: transparent;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2563eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-website:hover {
+            background: #eff6ff;
+            border-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-website i {
+            font-size: 0.9rem;
+        }
+
         /* ----- SEARCH BAR ----- */
         .search-bar-wrap {
             margin-bottom: 1.75rem;
@@ -629,7 +654,7 @@
         }
 
         /* ================================================================
-                   DOWNLOAD POP-UP MODAL
+                   DOWNLOAD POP-UP MODAL (with High Alert)
                 ================================================================ */
         .download-popup-overlay {
             display: none;
@@ -651,7 +676,7 @@
             background: #ffffff;
             border-radius: 28px;
             padding: 2.5rem 2.2rem 2.2rem;
-            max-width: 420px;
+            max-width: 440px;
             width: 100%;
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
             animation: modalIn 0.3s ease;
@@ -675,7 +700,50 @@
             color: #64748b;
             font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ----- High Alert Box ----- */
+        .alert-box {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0 1.5rem;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .alert-box i {
+            color: #ef4444;
+            font-size: 1.2rem;
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+        }
+
+        .alert-box .alert-content {
+            font-size: 0.85rem;
+            color: #7f1d1d;
+            line-height: 1.5;
+        }
+
+        .alert-box .alert-content strong {
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        .alert-box .alert-content .dns-code {
+            display: inline-block;
+            background: #1e293b;
+            color: #f8fafc;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            letter-spacing: 0.02em;
+            margin-top: 0.2rem;
         }
 
         .download-popup-card .btn-ok {
@@ -896,6 +964,10 @@
                 <span style="font-size:0.8rem;color:#94a3b8;font-weight:500;">
                     <i class="fas fa-download" style="color:#2563eb;"></i> Free Apps
                 </span>
+                <!-- 🔗 Official Website Button (link बाद में डालें) -->
+                <a href="Https://Priyanshusingh.pages.dev" target="_blank" class="btn-website" id="officialWebsiteBtn">
+                    <i class="fas fa-globe"></i> Official Website
+                </a>
             </div>
         </header>
 
@@ -975,12 +1047,26 @@
         </div>
     </div>
 
-    <!-- ===== DOWNLOAD POP-UP ===== -->
+    <!-- ===== DOWNLOAD POP-UP (with High Alert) ===== -->
     <div class="download-popup-overlay" id="downloadPopupOverlay">
         <div class="download-popup-card">
             <div class="popup-icon"><i class="fas fa-check-circle"></i></div>
             <h3>Download Started!</h3>
             <p>The APK file is being downloaded.<br />Open your <strong>Downloads</strong> folder and tap the file to install it.</p>
+
+            <!-- 🔔 High Alert Box -->
+            <div class="alert-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="alert-content">
+                    <strong>⚠️ High Alert:</strong> If this APK shows any ads, 
+                    <strong>set Private DNS</strong> on your device to:
+                    <br />
+                    <span class="dns-code">dns.adguard.com</span>
+                    <br />
+                    <span style="font-size:0.75rem;color:#991b1b;">(This blocks ads system-wide in all apps)</span>
+                </div>
+            </div>
+
             <button class="btn-ok" id="downloadPopupOkBtn">Got it</button>
         </div>
     </div>
@@ -997,7 +1083,6 @@
     <script>
         // ================================================================
         // 1. APP DATA – add your APK filenames here
-        //    Make sure the .apk files are in the SAME directory as this HTML
         // ================================================================
         const APPS = [{
             id: 'revision',
@@ -1005,8 +1090,7 @@
             category: 'Education',
             emoji: '📚',
             color: '#FF6B6B',
-            description: 'Quick revision notes and flashcards for exam preparation.',
-            // 👇 This must match the EXACT filename in your repository
+            description: 'A smart study & revision tracking application designed for JEE aspirants to log daily topics, manage spaced-repetition revision cycles, and build daily study streaks efficiently.',
             downloadUrl: 'Revision.apk'
         }, {
             id: 'myMistakes',
@@ -1014,7 +1098,7 @@
             category: 'Education',
             emoji: '📝',
             color: '#4ECDC4',
-            description: 'Track and analyse your mistakes to improve performance.',
+            description: 'A web-based tool that allows students to upload and digitally record photos of their academic mistakes from tests, DPPs, and modules. It serves as a centralized revision hub, making it easy to track, organize, and review all mistakes in one place before major exams.',
             downloadUrl: 'MY MISTAKES.apk'
         }, {
             id: 'flashRevision',
@@ -1022,24 +1106,24 @@
             category: 'Education',
             emoji: '⚡',
             color: '#45B7D1',
-            description: 'Fast-paced flashcard revision for last-minute prep.',
-            downloadUrl: 'FlashRevision.apk'
+            description: 'An interactive 3D flashcard revision tool designed specifically for JEE aspirants. It allows students to quickly recall key concepts, memorize formulas subject-wise, track daily revision history with color-coded status badges, and save important cards for revision later.',
+            downloadUrl: 'Flash Revision.apk'
         }, {
             id: 'lectures11th',
             name: '11th Lectures',
             category: 'Education',
             emoji: '📖',
             color: '#96CEB4',
-            description: 'Complete video lectures for 11th standard curriculum.',
-            downloadUrl: 'Lectures11th.apk'
+            description: 'A dedicated educational portal providing Class 11 JEE aspirants free access to premium Physics Wallah (PW) lectures, structured chapter-wise notes, and study resources designed to streamline daily learning and revision for competitive exams.',
+            downloadUrl: '11th Lectures.apk'
         }, {
             id: 'myTracker',
             name: 'MyTracker',
             category: 'Tools',
             emoji: '📍',
             color: '#FFD93D',
-            description: 'Track your daily progress, tasks, and study hours.',
-            downloadUrl: 'MyTracker.apk'
+            description: 'A web application designed to help JEE aspirants optimize their daily schedule by tracking study hours, sleep patterns, and daily habits. It enables students to analyze historical data for self-improvement and features an automated WhatsApp integration that sends full-day performance reports directly to parents.',
+            downloadUrl: 'My Tracker.apk'
         }, {
             id: 'timeTable',
             name: 'Time-Table',
@@ -1047,7 +1131,7 @@
             emoji: '⏰',
             color: '#DDA0DD',
             description: 'Smart timetable generator for efficient study planning.',
-            downloadUrl: 'TimeTable.apk'
+            downloadUrl: 'Time Table.apk'
         }];
 
         const CATEGORY_MAP = {
@@ -1093,6 +1177,7 @@
         const toolsCount = document.getElementById('toolsCount');
 
         const creditName = document.getElementById('creditName');
+        const officialWebsiteBtn = document.getElementById('officialWebsiteBtn');
 
         // ================================================================
         // 4. TOAST
@@ -1120,17 +1205,15 @@
         }
 
         // ================================================================
-        // 5. DOWNLOAD HELPER (fixes the "nothing happens" issue)
+        // 5. DOWNLOAD HELPER
         // ================================================================
         function downloadAPK(app) {
             const url = app.downloadUrl;
-
             if (!url || url.trim() === '') {
                 showToast(`❌ No download URL configured for "${app.name}"`, 'error');
                 return;
             }
 
-            // Option 1: Use a hidden anchor with download attribute (most reliable)
             try {
                 const link = document.createElement('a');
                 link.href = url;
@@ -1140,19 +1223,10 @@
                 link.click();
                 document.body.removeChild(link);
 
-                // Show the nice popup
                 showDownloadPopup();
                 showToast(`⬇️ Downloading ${app.name}...`, 'info');
-
-                // 🔁 After 5s, if the user hasn't dismissed the popup, it stays.
-                // But we also want to keep the toast shorter.
-                setTimeout(() => {
-                    // just a safety: if toast is still showing, let it fade
-                }, 2000);
-
             } catch (err) {
                 console.error('Download error:', err);
-                // Fallback: open in new tab
                 try {
                     window.open(url, '_blank');
                     showDownloadPopup();
@@ -1208,7 +1282,6 @@
 
             appGrid.innerHTML = filtered.map(app => createAppCard(app)).join('');
 
-            // Attach events
             document.querySelectorAll('.app-card').forEach(card => {
                 const appId = card.dataset.appId;
                 card.addEventListener('click', (e) => {
@@ -1229,7 +1302,7 @@
 
         function createAppCard(app) {
             const hasUrl = app.downloadUrl && app.downloadUrl.trim() !== '';
-            const btnClass = hasUrl ? 'btn-download' : 'btn-download';
+            const btnClass = 'btn-download';
             const btnIcon = '<i class="fas fa-download"></i>';
             const btnText = hasUrl ? 'Download' : 'Coming Soon';
 
@@ -1384,26 +1457,28 @@
         // 12. CREDIT NAME CLICK
         // ================================================================
         creditName.addEventListener('click', function() {
-            // Replace with your link:
-            // window.open('https://your-link.com', '_blank');
             showToast('🔗 Add your link in the code (creditName click handler)', 'info');
         });
 
         // ================================================================
-        // 13. INIT
+        // 13. OFFICIAL WEBSITE BUTTON (बाद में लिंक डालें)
+        // ================================================================
+        officialWebsiteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // यहाँ अपनी लिंक डालें, उदाहरण:
+            // window.open('https://your-official-website.com', '_blank');
+            showToast('🌐 Official Website link will be added soon!', 'info');
+        });
+
+        // ================================================================
+        // 14. INIT
         // ================================================================
         updateBadgeCounts();
         renderApps();
 
-        console.log('🚀 PS Store ready! (No login required)');
-        console.log('📱 APK files must be in the SAME directory as this HTML file.');
+        console.log('🚀 PS Store ready with High Alert & Official Website button!');
+        console.log('📱 APK files must be in the SAME directory as this HTML.');
         console.log('📝 Edit the APPS array to match your exact filenames.');
-        console.log('   Example: downloadUrl: "Revision.apk"');
-        console.log('');
-        console.log('📌 If download still fails, check:');
-        console.log('   1. File name spelling (case-sensitive!)');
-        console.log('   2. File exists in the same folder');
-        console.log('   3. On GitHub Pages, files are served from the repo root');
     </script>
 
 </body>
