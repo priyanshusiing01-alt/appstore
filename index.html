@@ -9,14 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    <!-- Firebase SDK (compat) -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js">
-    </script>
-
     <style>
         /* ----- RESET & BASE ----- */
         *,
@@ -107,182 +99,6 @@
             align-items: center;
             gap: 0.75rem;
             flex-wrap: wrap;
-        }
-
-        .greeting-display {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #e2e8f0;
-            padding: 0.3rem 1rem 0.3rem 0.6rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #0f172a;
-        }
-
-        .greeting-display .avatar-sm {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: #2563eb;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            flex-shrink: 0;
-        }
-
-        .greeting-display .greeting-text {
-            white-space: nowrap;
-        }
-
-        .greeting-display .greeting-text .user-name-display {
-            color: #2563eb;
-        }
-
-        .greeting-display .edit-name-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 0.75rem;
-            padding: 0.2rem 0.3rem;
-            border-radius: 30px;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .greeting-display .edit-name-btn:hover {
-            background: #cbd5e1;
-            color: #0f172a;
-        }
-
-        .btn-outline {
-            padding: 0.5rem 1.25rem;
-            border-radius: 60px;
-            border: 1.5px solid #cbd5e1;
-            background: transparent;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #1e293b;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-outline:hover {
-            background: #e2e8f0;
-            border-color: #94a3b8;
-        }
-
-        .btn-primary-solid {
-            padding: 0.5rem 1.5rem;
-            border-radius: 60px;
-            border: none;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-primary-solid:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-google {
-            padding: 0.5rem 1.5rem;
-            border-radius: 60px;
-            border: none;
-            background: #ffffff;
-            color: #1e293b;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            border: 1.5px solid #e2e8f0;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-        }
-
-        .btn-google:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-            transform: translateY(-1px);
-        }
-
-        .btn-google i {
-            color: #ea4335;
-            font-size: 1.1rem;
-        }
-
-        .btn-danger-outline {
-            padding: 0.5rem 1.25rem;
-            border-radius: 60px;
-            border: 1.5px solid #fca5a5;
-            background: transparent;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #dc2626;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-danger-outline:hover {
-            background: #fee2e2;
-            border-color: #f87171;
-        }
-
-        .user-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: #e2e8f0;
-            padding: 0.3rem 0.9rem 0.3rem 0.6rem;
-            border-radius: 60px;
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-
-        .user-badge .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #2563eb;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-
-        .user-badge .name {
-            color: #0f172a;
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
         /* ----- SEARCH BAR ----- */
@@ -813,248 +629,6 @@
         }
 
         /* ================================================================
-                   NAME PROMPT MODAL (first login)
-                ================================================================ */
-        .name-prompt-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(6px);
-            z-index: 4000;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .name-prompt-overlay.active {
-            display: flex;
-        }
-
-        .name-prompt-card {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 2.5rem 2.2rem 2.2rem;
-            max-width: 420px;
-            width: 100%;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
-            animation: modalIn 0.3s ease;
-            text-align: center;
-        }
-
-        .name-prompt-card .avatar-big {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #2563eb, #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            color: #fff;
-            margin: 0 auto 1rem;
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
-        }
-
-        .name-prompt-card h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 0.25rem;
-        }
-
-        .name-prompt-card .sub {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .name-prompt-card .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .name-prompt-card label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #334155;
-            margin-bottom: 0.3rem;
-            text-align: left;
-        }
-
-        .name-prompt-card input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 14px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: border 0.2s ease;
-            background: #f8fafc;
-        }
-
-        .name-prompt-card input:focus {
-            outline: none;
-            border-color: #2563eb;
-            background: #ffffff;
-        }
-
-        .name-prompt-card .btn-submit {
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 60px;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .name-prompt-card .btn-submit:hover {
-            background: #1d4ed8;
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
-        }
-
-        .name-prompt-card .skip-link {
-            display: inline-block;
-            margin-top: 0.8rem;
-            color: #94a3b8;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .name-prompt-card .skip-link:hover {
-            color: #475569;
-        }
-
-        /* ================================================================
-                   EDIT NAME MODAL
-                ================================================================ */
-        .edit-name-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(6px);
-            z-index: 4500;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .edit-name-overlay.active {
-            display: flex;
-        }
-
-        .edit-name-card {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 2.5rem 2.2rem 2.2rem;
-            max-width: 420px;
-            width: 100%;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
-            animation: modalIn 0.3s ease;
-            text-align: center;
-        }
-
-        .edit-name-card .avatar-big {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #2563eb, #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            color: #fff;
-            margin: 0 auto 1rem;
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
-        }
-
-        .edit-name-card h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 0.25rem;
-        }
-
-        .edit-name-card .sub {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .edit-name-card .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .edit-name-card label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #334155;
-            margin-bottom: 0.3rem;
-            text-align: left;
-        }
-
-        .edit-name-card input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 14px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: border 0.2s ease;
-            background: #f8fafc;
-        }
-
-        .edit-name-card input:focus {
-            outline: none;
-            border-color: #2563eb;
-            background: #ffffff;
-        }
-
-        .edit-name-card .btn-submit {
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 60px;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .edit-name-card .btn-submit:hover {
-            background: #1d4ed8;
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
-        }
-
-        .edit-name-card .btn-secondary-outline {
-            display: inline-block;
-            margin-top: 0.8rem;
-            padding: 0.4rem 1.5rem;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 60px;
-            background: transparent;
-            color: #64748b;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .edit-name-card .btn-secondary-outline:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-
-        /* ================================================================
                    DOWNLOAD POP-UP MODAL
                 ================================================================ */
         .download-popup-overlay {
@@ -1147,167 +721,6 @@
         .footer-credit .credit-name:hover {
             color: #1d4ed8;
             text-decoration: underline;
-        }
-
-        /* ----- AUTH MODAL ----- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 2.5rem 2.2rem;
-            max-width: 400px;
-            width: 100%;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-            animation: modalIn 0.25s ease;
-        }
-
-        .modal-box h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            color: #0f172a;
-        }
-
-        .modal-box .sub {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-box .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .modal-box label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #334155;
-            margin-bottom: 0.25rem;
-        }
-
-        .modal-box input {
-            width: 100%;
-            padding: 0.7rem 1rem;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            transition: border 0.2s ease;
-            background: #f8fafc;
-        }
-
-        .modal-box input:focus {
-            outline: none;
-            border-color: #2563eb;
-            background: #ffffff;
-        }
-
-        .modal-box .btn-submit {
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 60px;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 0.5rem;
-        }
-
-        .modal-box .btn-submit:hover {
-            background: #1d4ed8;
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
-        }
-
-        .modal-box .toggle-mode {
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        .modal-box .toggle-mode a {
-            color: #2563eb;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .modal-box .toggle-mode a:hover {
-            text-decoration: underline;
-        }
-
-        .modal-box .close-modal {
-            position: relative;
-            float: right;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #94a3b8;
-            cursor: pointer;
-            margin-top: -0.5rem;
-            margin-right: -0.5rem;
-        }
-
-        .modal-box .close-modal:hover {
-            color: #0f172a;
-        }
-
-        .modal-box .divider {
-            display: flex;
-            align-items: center;
-            margin: 1.2rem 0;
-            color: #94a3b8;
-            font-size: 0.75rem;
-            gap: 0.75rem;
-        }
-
-        .modal-box .divider::before,
-        .modal-box .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e2e8f0;
-        }
-
-        .modal-box .btn-google {
-            width: 100%;
-            justify-content: center;
-            padding: 0.6rem;
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
-        .modal-box .forgot-password {
-            display: block;
-            text-align: right;
-            font-size: 0.75rem;
-            color: #2563eb;
-            cursor: pointer;
-            margin-top: 0.2rem;
-            transition: color 0.2s ease;
-        }
-
-        .modal-box .forgot-password:hover {
-            text-decoration: underline;
-            color: #1d4ed8;
         }
 
         /* ----- TOAST ----- */
@@ -1403,18 +816,6 @@
                 justify-content: flex-start;
                 flex-wrap: wrap;
             }
-            .greeting-display {
-                font-size: 0.75rem;
-                padding: 0.2rem 0.8rem 0.2rem 0.4rem;
-            }
-            .greeting-display .avatar-sm {
-                width: 28px;
-                height: 28px;
-                font-size: 0.7rem;
-            }
-            .greeting-display .edit-name-btn {
-                font-size: 0.65rem;
-            }
             .modal-box {
                 padding: 1.75rem 1.25rem;
             }
@@ -1426,16 +827,10 @@
             .logo-text {
                 font-size: 1.1rem;
             }
-            .name-prompt-card {
-                padding: 1.75rem 1.25rem;
-            }
             .app-detail-card {
                 padding: 1.25rem;
             }
             .download-popup-card {
-                padding: 1.75rem 1.25rem;
-            }
-            .edit-name-card {
                 padding: 1.75rem 1.25rem;
             }
         }
@@ -1497,23 +892,10 @@
                 <div class="circle-logo">PS</div>
                 <span class="logo-text"><span>PS</span> Store</span>
             </div>
-            <div class="nav-actions" id="navActions">
-                <div class="greeting-display hidden" id="greetingDisplay">
-                    <span class="avatar-sm" id="greetingAvatar">P</span>
-                    <span class="greeting-text" id="greetingText">Good Morning, <span class="user-name-display" id="greetingName">User</span>!</span>
-                    <button class="edit-name-btn" id="editNameBtn" title="Edit your name"><i class="fas fa-pen"></i></button>
-                </div>
-
-                <button class="btn-outline" id="signUpBtn"><i class="fas fa-user-plus"></i> Sign Up</button>
-                <button class="btn-primary-solid" id="signInBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
-
-                <div class="user-badge hidden" id="userBadge">
-                    <span class="avatar" id="userAvatar">P</span>
-                    <span class="name" id="userName">User</span>
-                    <button class="btn-danger-outline" id="logoutBtn" style="padding:0.25rem 0.8rem;font-size:0.7rem;border-color:#e2e8f0;color:#64748b;">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
+            <div class="nav-actions">
+                <span style="font-size:0.8rem;color:#94a3b8;font-weight:500;">
+                    <i class="fas fa-download" style="color:#2563eb;"></i> Free Apps
+                </span>
             </div>
         </header>
 
@@ -1593,36 +975,6 @@
         </div>
     </div>
 
-    <!-- ===== NAME PROMPT MODAL ===== -->
-    <div class="name-prompt-overlay" id="namePromptOverlay">
-        <div class="name-prompt-card">
-            <div class="avatar-big"><i class="fas fa-user-plus"></i></div>
-            <h3>Welcome! 👋</h3>
-            <p class="sub">What should we call you?</p>
-            <div class="form-group">
-                <label for="nameInput">Your Name</label>
-                <input type="text" id="nameInput" placeholder="e.g. Aman" maxlength="30" />
-            </div>
-            <button class="btn-submit" id="saveNameBtn"><i class="fas fa-check"></i> Save Name</button>
-            <div class="skip-link" id="skipNameBtn">Skip for now</div>
-        </div>
-    </div>
-
-    <!-- ===== EDIT NAME MODAL ===== -->
-    <div class="edit-name-overlay" id="editNameOverlay">
-        <div class="edit-name-card">
-            <div class="avatar-big"><i class="fas fa-user-edit"></i></div>
-            <h3>Edit Your Name</h3>
-            <p class="sub">Change the name shown in your greeting.</p>
-            <div class="form-group">
-                <label for="editNameInput">New Name</label>
-                <input type="text" id="editNameInput" placeholder="Enter your name" maxlength="30" />
-            </div>
-            <button class="btn-submit" id="saveEditNameBtn"><i class="fas fa-check"></i> Save</button>
-            <button class="btn-secondary-outline" id="cancelEditNameBtn">Cancel</button>
-        </div>
-    </div>
-
     <!-- ===== DOWNLOAD POP-UP ===== -->
     <div class="download-popup-overlay" id="downloadPopupOverlay">
         <div class="download-popup-card">
@@ -1630,38 +982,6 @@
             <h3>Download Started!</h3>
             <p>The APK file is being downloaded.<br />Open your <strong>Downloads</strong> folder and tap the file to install it.</p>
             <button class="btn-ok" id="downloadPopupOkBtn">Got it</button>
-        </div>
-    </div>
-
-    <!-- ===== AUTH MODAL ===== -->
-    <div class="modal-overlay" id="authModal">
-        <div class="modal-box">
-            <button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></button>
-            <h3 id="modalTitle">Sign In</h3>
-            <p class="sub" id="modalSub">Welcome back!</p>
-
-            <div class="form-group">
-                <label for="authEmail">Email</label>
-                <input type="email" id="authEmail" placeholder="you@example.com" />
-            </div>
-            <div class="form-group">
-                <label for="authPassword">Password</label>
-                <input type="password" id="authPassword" placeholder="••••••••" />
-                <span class="forgot-password" id="forgotPasswordLink">Forgot password?</span>
-            </div>
-
-            <button class="btn-submit" id="authSubmitBtn">Sign In</button>
-
-            <div class="divider">or</div>
-
-            <button class="btn-google" id="googleSignInBtn">
-                <i class="fab fa-google"></i> Sign in with Google
-            </button>
-
-            <div class="toggle-mode">
-                <span id="toggleText">Don't have an account?</span>
-                <a id="toggleModeLink">Sign Up</a>
-            </div>
         </div>
     </div>
 
@@ -1676,7 +996,8 @@
     <!-- ================================================================ -->
     <script>
         // ================================================================
-        // 1. APP DATA (6 apps) – add your downloadUrl from GitHub Releases
+        // 1. APP DATA – add your APK filenames here
+        //    Make sure the .apk files are in the SAME directory as this HTML
         // ================================================================
         const APPS = [{
             id: 'revision',
@@ -1685,6 +1006,7 @@
             emoji: '📚',
             color: '#FF6B6B',
             description: 'Quick revision notes and flashcards for exam preparation.',
+            // 👇 This must match the EXACT filename in your repository
             downloadUrl: 'Revision.apk'
         }, {
             id: 'myMistakes',
@@ -1693,7 +1015,7 @@
             emoji: '📝',
             color: '#4ECDC4',
             description: 'Track and analyse your mistakes to improve performance.',
-            downloadUrl: ''
+            downloadUrl: 'MyMistakes.apk'
         }, {
             id: 'flashRevision',
             name: 'Flash Revision',
@@ -1701,7 +1023,7 @@
             emoji: '⚡',
             color: '#45B7D1',
             description: 'Fast-paced flashcard revision for last-minute prep.',
-            downloadUrl: ''
+            downloadUrl: 'FlashRevision.apk'
         }, {
             id: 'lectures11th',
             name: '11th Lectures',
@@ -1709,7 +1031,7 @@
             emoji: '📖',
             color: '#96CEB4',
             description: 'Complete video lectures for 11th standard curriculum.',
-            downloadUrl: ''
+            downloadUrl: 'Lectures11th.apk'
         }, {
             id: 'myTracker',
             name: 'MyTracker',
@@ -1717,7 +1039,7 @@
             emoji: '📍',
             color: '#FFD93D',
             description: 'Track your daily progress, tasks, and study hours.',
-            downloadUrl: ''
+            downloadUrl: 'MyTracker.apk'
         }, {
             id: 'timeTable',
             name: 'Time-Table',
@@ -1725,7 +1047,7 @@
             emoji: '⏰',
             color: '#DDA0DD',
             description: 'Smart timetable generator for efficient study planning.',
-            downloadUrl: ''
+            downloadUrl: 'TimeTable.apk'
         }];
 
         const CATEGORY_MAP = {
@@ -1735,36 +1057,14 @@
         };
 
         // ================================================================
-        // 2. FIREBASE CONFIG – YOUR NEW PROJECT (appstore-a7594)
+        // 2. STATE
         // ================================================================
-        const firebaseConfig = {
-            apiKey: "AIzaSyC9s7HhJV2gP5rOpY6R-4dz0wcxgfOixrA",
-            authDomain: "appstore-a7594.firebaseapp.com",
-            projectId: "appstore-a7594",
-            storageBucket: "appstore-a7594.firebasestorage.app",
-            messagingSenderId: "267329496808",
-            appId: "1:267329496808:web:9b735d44f61070354b8b5d",
-            measurementId: "G-FMLSKXLR2D"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const provider = new firebase.auth.GoogleAuthProvider();
-
-        // ================================================================
-        // 3. STATE
-        // ================================================================
-        let currentUser = null;
-        let downloadedApps = {};
-        let isSignUpMode = false;
         let currentFilter = 'all';
         let searchQuery = '';
-        let userDisplayName = '';
-        let isNamePromptOpen = false;
+        let currentDetailAppId = null;
 
         // ================================================================
-        // 4. DOM REFS
+        // 3. DOM REFS
         // ================================================================
         const appGrid = document.getElementById('appGrid');
         const sectionTitle = document.getElementById('sectionTitle');
@@ -1779,44 +1079,9 @@
         const detailCategory = document.getElementById('detailCategory');
         const detailDesc = document.getElementById('detailDesc');
         const detailActionBtn = document.getElementById('detailActionBtn');
-        let currentDetailAppId = null;
-
-        const namePromptOverlay = document.getElementById('namePromptOverlay');
-        const nameInput = document.getElementById('nameInput');
-        const saveNameBtn = document.getElementById('saveNameBtn');
-        const skipNameBtn = document.getElementById('skipNameBtn');
-
-        const editNameOverlay = document.getElementById('editNameOverlay');
-        const editNameInput = document.getElementById('editNameInput');
-        const saveEditNameBtn = document.getElementById('saveEditNameBtn');
-        const cancelEditNameBtn = document.getElementById('cancelEditNameBtn');
-        const editNameBtn = document.getElementById('editNameBtn');
 
         const downloadPopupOverlay = document.getElementById('downloadPopupOverlay');
         const downloadPopupOkBtn = document.getElementById('downloadPopupOkBtn');
-
-        const greetingDisplay = document.getElementById('greetingDisplay');
-        const greetingAvatar = document.getElementById('greetingAvatar');
-        const greetingText = document.getElementById('greetingText');
-        const greetingName = document.getElementById('greetingName');
-
-        const signUpBtn = document.getElementById('signUpBtn');
-        const signInBtn = document.getElementById('signInBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const userBadge = document.getElementById('userBadge');
-        const userAvatar = document.getElementById('userAvatar');
-        const userName = document.getElementById('userName');
-        const authModal = document.getElementById('authModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalSub = document.getElementById('modalSub');
-        const authEmail = document.getElementById('authEmail');
-        const authPassword = document.getElementById('authPassword');
-        const authSubmitBtn = document.getElementById('authSubmitBtn');
-        const toggleModeLink = document.getElementById('toggleModeLink');
-        const toggleText = document.getElementById('toggleText');
-        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-        const googleSignInBtn = document.getElementById('googleSignInBtn');
 
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
@@ -1830,26 +1095,72 @@
         const creditName = document.getElementById('creditName');
 
         // ================================================================
-        // 5. GREETING HELPER
+        // 4. TOAST
         // ================================================================
-        function getTimeBasedGreeting() {
-            const hour = new Date().getHours();
-            if (hour >= 5 && hour < 12) return 'Good Morning';
-            if (hour >= 12 && hour < 17) return 'Good Afternoon';
-            if (hour >= 17 && hour < 21) return 'Good Evening';
-            return 'Good Night';
+        let toastTimeout;
+
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            const icon = toast.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+                icon.style.color = '#34d399';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+                icon.style.color = '#f87171';
+            } else {
+                icon.className = 'fas fa-info-circle';
+                icon.style.color = '#60a5fa';
+            }
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
 
-        function updateGreeting(name) {
-            if (!name || name.trim() === '') {
-                greetingDisplay.classList.add('hidden');
+        // ================================================================
+        // 5. DOWNLOAD HELPER (fixes the "nothing happens" issue)
+        // ================================================================
+        function downloadAPK(app) {
+            const url = app.downloadUrl;
+
+            if (!url || url.trim() === '') {
+                showToast(`❌ No download URL configured for "${app.name}"`, 'error');
                 return;
             }
-            const greeting = getTimeBasedGreeting();
-            greetingName.textContent = name;
-            greetingText.innerHTML = `${greeting}, <span class="user-name-display">${name}</span>!`;
-            greetingAvatar.textContent = name.charAt(0).toUpperCase();
-            greetingDisplay.classList.remove('hidden');
+
+            // Option 1: Use a hidden anchor with download attribute (most reliable)
+            try {
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = url.split('/').pop() || `${app.name}.apk`;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Show the nice popup
+                showDownloadPopup();
+                showToast(`⬇️ Downloading ${app.name}...`, 'info');
+
+                // 🔁 After 5s, if the user hasn't dismissed the popup, it stays.
+                // But we also want to keep the toast shorter.
+                setTimeout(() => {
+                    // just a safety: if toast is still showing, let it fade
+                }, 2000);
+
+            } catch (err) {
+                console.error('Download error:', err);
+                // Fallback: open in new tab
+                try {
+                    window.open(url, '_blank');
+                    showDownloadPopup();
+                    showToast(`⬇️ Downloading ${app.name}...`, 'info');
+                } catch (e2) {
+                    showToast(`❌ Could not download "${app.name}". Check the file path.`, 'error');
+                }
+            }
         }
 
         // ================================================================
@@ -1897,6 +1208,7 @@
 
             appGrid.innerHTML = filtered.map(app => createAppCard(app)).join('');
 
+            // Attach events
             document.querySelectorAll('.app-card').forEach(card => {
                 const appId = card.dataset.appId;
                 card.addEventListener('click', (e) => {
@@ -1908,17 +1220,18 @@
                 if (btn) {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        handleAppAction(appId);
+                        const app = APPS.find(a => a.id === appId);
+                        if (app) downloadAPK(app);
                     });
                 }
             });
         }
 
         function createAppCard(app) {
-            const isDownloaded = downloadedApps[app.id] || false;
-            const btnClass = isDownloaded ? 'btn-open' : 'btn-download';
-            const btnIcon = isDownloaded ? '<i class="fas fa-play"></i>' : '<i class="fas fa-download"></i>';
-            const btnText = isDownloaded ? 'Open' : 'Download';
+            const hasUrl = app.downloadUrl && app.downloadUrl.trim() !== '';
+            const btnClass = hasUrl ? 'btn-download' : 'btn-download';
+            const btnIcon = '<i class="fas fa-download"></i>';
+            const btnText = hasUrl ? 'Download' : 'Coming Soon';
 
             let iconHtml;
             if (app.imageUrl && app.imageUrl.trim() !== '') {
@@ -1934,7 +1247,9 @@
                     </div>
                     <div class="app-name">${app.name}</div>
                     <div class="app-category">${app.category}</div>
-                    <button class="app-action-btn ${btnClass}">${btnIcon} ${btnText}</button>
+                    <button class="app-action-btn ${btnClass}" ${!hasUrl ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
+                        ${btnIcon} ${btnText}
+                    </button>
                     <div class="click-hint"><i class="fas fa-info-circle"></i> tap for details</div>
                 </div>
             `;
@@ -1966,20 +1281,25 @@
                 detailDesc.innerHTML = `<span class="placeholder-desc">Description will be added soon...</span>`;
             }
 
-            const isDownloaded = downloadedApps[app.id] || false;
-            if (isDownloaded) {
-                detailActionBtn.className = 'btn btn-open';
-                detailActionBtn.innerHTML = '<i class="fas fa-play"></i> Open';
-            } else {
-                detailActionBtn.className = 'btn btn-download';
-                detailActionBtn.innerHTML = '<i class="fas fa-download"></i> Download';
-            }
-
+            const hasUrl = app.downloadUrl && app.downloadUrl.trim() !== '';
             const newBtn = detailActionBtn.cloneNode(true);
+            if (hasUrl) {
+                newBtn.className = 'btn btn-download';
+                newBtn.innerHTML = '<i class="fas fa-download"></i> Download';
+                newBtn.disabled = false;
+                newBtn.style.opacity = '1';
+                newBtn.style.cursor = 'pointer';
+            } else {
+                newBtn.className = 'btn btn-download';
+                newBtn.innerHTML = '<i class="fas fa-clock"></i> Coming Soon';
+                newBtn.disabled = true;
+                newBtn.style.opacity = '0.5';
+                newBtn.style.cursor = 'not-allowed';
+            }
             detailActionBtn.parentNode.replaceChild(newBtn, detailActionBtn);
             newBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                handleAppAction(appId);
+                if (hasUrl) downloadAPK(app);
             });
 
             detailOverlay.classList.add('active');
@@ -2001,61 +1321,7 @@
         });
 
         // ================================================================
-        // 8. APP ACTION (Download / Open)
-        // ================================================================
-        function handleAppAction(appId) {
-            if (!currentUser) {
-                showToast('Please sign in to download or open apps.', 'info');
-                openAuthModal(false);
-                return;
-            }
-
-            const app = APPS.find(a => a.id === appId);
-            if (!app) return;
-
-            const isDownloaded = downloadedApps[appId] || false;
-
-            if (isDownloaded) {
-                showToast(`Opening ${app.name}... 🚀`, 'success');
-                return;
-            }
-
-            if (app.downloadUrl && app.downloadUrl.trim() !== '') {
-                const link = document.createElement('a');
-                link.href = app.downloadUrl;
-                link.download = `${app.name}.apk`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                showDownloadPopup();
-
-                const userRef = db.collection('users').doc(currentUser.uid);
-                userRef.update({
-                    [`downloadedApps.${appId}`]: true
-                }).then(() => {
-                    downloadedApps[appId] = true;
-                    renderApps();
-                    if (currentDetailAppId === appId) {
-                        const btn = document.querySelector('#detailActionBtn');
-                        if (btn) {
-                            btn.className = 'btn btn-open';
-                            btn.innerHTML = '<i class="fas fa-play"></i> Open';
-                        }
-                    }
-                }).catch(err => {
-                    console.error('Error saving download status:', err);
-                    showToast('App downloaded but status not saved. Try again.', 'error');
-                });
-
-                showToast(`Downloading ${app.name}...`, 'info');
-            } else {
-                showToast('Download URL not configured for this app.', 'error');
-            }
-        }
-
-        // ================================================================
-        // 9. DOWNLOAD POP-UP
+        // 8. DOWNLOAD POP-UP
         // ================================================================
         function showDownloadPopup() {
             downloadPopupOverlay.classList.add('active');
@@ -2073,355 +1339,7 @@
         });
 
         // ================================================================
-        // 10. EDIT NAME
-        // ================================================================
-        function openEditNameModal() {
-            if (!currentUser) {
-                showToast('Please sign in first.', 'info');
-                return;
-            }
-            editNameInput.value = userDisplayName || '';
-            editNameOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            editNameInput.focus();
-        }
-
-        function closeEditNameModal() {
-            editNameOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function saveEditName() {
-            const newName = editNameInput.value.trim();
-            if (!newName) {
-                showToast('Name cannot be empty.', 'error');
-                return;
-            }
-            if (!currentUser) {
-                showToast('Please sign in.', 'error');
-                closeEditNameModal();
-                return;
-            }
-
-            const userRef = db.collection('users').doc(currentUser.uid);
-            userRef.update({
-                displayName: newName
-            }).then(() => {
-                userDisplayName = newName;
-                updateGreeting(newName);
-                userAvatar.textContent = newName.charAt(0).toUpperCase();
-                closeEditNameModal();
-                showToast('Name updated! ✅', 'success');
-            }).catch(err => {
-                console.error('Error updating name:', err);
-                userRef.set({ displayName: newName, downloadedApps: downloadedApps }, { merge: true })
-                    .then(() => {
-                        userDisplayName = newName;
-                        updateGreeting(newName);
-                        userAvatar.textContent = newName.charAt(0).toUpperCase();
-                        closeEditNameModal();
-                        showToast('Name updated! ✅', 'success');
-                    })
-                    .catch(e => {
-                        console.error(e);
-                        showToast('Error updating name.', 'error');
-                    });
-            });
-        }
-
-        editNameBtn.addEventListener('click', openEditNameModal);
-        saveEditNameBtn.addEventListener('click', saveEditName);
-        cancelEditNameBtn.addEventListener('click', closeEditNameModal);
-        editNameInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') saveEditName();
-            if (e.key === 'Escape') closeEditNameModal();
-        });
-        editNameOverlay.addEventListener('click', (e) => {
-            if (e.target === editNameOverlay) closeEditNameModal();
-        });
-
-        // ================================================================
-        // 11. FIREBASE AUTH & SYNC
-        // ================================================================
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                currentUser = user;
-                updateUIForLoggedIn(user);
-                subscribeToUserData(user.uid);
-                db.collection('users').doc(user.uid).get().then(doc => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        if (data.displayName && data.displayName.trim() !== '') {
-                            userDisplayName = data.displayName;
-                            updateGreeting(userDisplayName);
-                        } else {
-                            if (user.displayName) {
-                                userDisplayName = user.displayName;
-                                updateGreeting(userDisplayName);
-                                db.collection('users').doc(user.uid).update({
-                                    displayName: user.displayName
-                                }).catch(() => {});
-                            } else {
-                                showNamePrompt();
-                            }
-                        }
-                    } else {
-                        if (user.displayName) {
-                            userDisplayName = user.displayName;
-                            updateGreeting(userDisplayName);
-                            db.collection('users').doc(user.uid).set({
-                                displayName: user.displayName,
-                                downloadedApps: {}
-                            }).catch(() => {});
-                        } else {
-                            showNamePrompt();
-                        }
-                    }
-                }).catch(err => {
-                    console.error('Error checking name:', err);
-                });
-            } else {
-                currentUser = null;
-                downloadedApps = {};
-                userDisplayName = '';
-                updateUIForLoggedOut();
-                renderApps();
-                greetingDisplay.classList.add('hidden');
-            }
-        });
-
-        function subscribeToUserData(uid) {
-            const userRef = db.collection('users').doc(uid);
-            userRef.onSnapshot(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    downloadedApps = data.downloadedApps || {};
-                    if (data.displayName && data.displayName.trim() !== '') {
-                        userDisplayName = data.displayName;
-                        updateGreeting(userDisplayName);
-                    }
-                } else {
-                    userRef.set({ downloadedApps: {} }).catch(err => console.error(err));
-                    downloadedApps = {};
-                }
-                renderApps();
-            }, err => {
-                console.error('Firestore listener error:', err);
-                userRef.get().then(doc => {
-                    if (doc.exists) {
-                        downloadedApps = doc.data().downloadedApps || {};
-                        if (doc.data().displayName) {
-                            userDisplayName = doc.data().displayName;
-                            updateGreeting(userDisplayName);
-                        }
-                    } else {
-                        downloadedApps = {};
-                    }
-                    renderApps();
-                }).catch(e => console.error(e));
-            });
-        }
-
-        // ================================================================
-        // 12. NAME PROMPT (first login)
-        // ================================================================
-        function showNamePrompt() {
-            if (isNamePromptOpen) return;
-            isNamePromptOpen = true;
-            namePromptOverlay.classList.add('active');
-            nameInput.value = '';
-            nameInput.focus();
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeNamePrompt() {
-            namePromptOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-            isNamePromptOpen = false;
-        }
-
-        function saveUserName() {
-            const name = nameInput.value.trim();
-            if (!name) {
-                showToast('Please enter a name.', 'error');
-                nameInput.focus();
-                return;
-            }
-            if (!currentUser) {
-                showToast('Please sign in first.', 'error');
-                closeNamePrompt();
-                return;
-            }
-
-            const userRef = db.collection('users').doc(currentUser.uid);
-            userRef.update({
-                displayName: name
-            }).then(() => {
-                userDisplayName = name;
-                updateGreeting(name);
-                closeNamePrompt();
-                showToast(`Welcome, ${name}! 🎉`, 'success');
-                userAvatar.textContent = name.charAt(0).toUpperCase();
-            }).catch(err => {
-                console.error('Error saving name:', err);
-                userRef.set({ displayName: name, downloadedApps: downloadedApps }, { merge: true })
-                    .then(() => {
-                        userDisplayName = name;
-                        updateGreeting(name);
-                        closeNamePrompt();
-                        showToast(`Welcome, ${name}! 🎉`, 'success');
-                        userAvatar.textContent = name.charAt(0).toUpperCase();
-                    })
-                    .catch(e => {
-                        console.error(e);
-                        showToast('Error saving name. Try again.', 'error');
-                    });
-            });
-        }
-
-        saveNameBtn.addEventListener('click', saveUserName);
-        nameInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') saveUserName();
-        });
-        skipNameBtn.addEventListener('click', () => {
-            closeNamePrompt();
-            if (currentUser && currentUser.email) {
-                const fallback = currentUser.email.split('@')[0];
-                userDisplayName = fallback;
-                updateGreeting(fallback);
-                db.collection('users').doc(currentUser.uid).update({
-                    displayName: fallback
-                }).catch(() => {});
-            }
-            showToast('You can set your name later.', 'info');
-        });
-
-        // ================================================================
-        // 13. UI UPDATES
-        // ================================================================
-        function updateUIForLoggedIn(user) {
-            signUpBtn.classList.add('hidden');
-            signInBtn.classList.add('hidden');
-            userBadge.classList.remove('hidden');
-            const name = user.displayName || user.email || 'User';
-            userName.textContent = name;
-            userAvatar.textContent = name.charAt(0).toUpperCase();
-            authModal.classList.remove('active');
-            if (userDisplayName) {
-                updateGreeting(userDisplayName);
-            }
-        }
-
-        function updateUIForLoggedOut() {
-            signUpBtn.classList.remove('hidden');
-            signInBtn.classList.remove('hidden');
-            userBadge.classList.add('hidden');
-            greetingDisplay.classList.add('hidden');
-            renderApps();
-        }
-
-        // ================================================================
-        // 14. AUTH MODAL (with Google & Forgot password)
-        // ================================================================
-        function openAuthModal(signUp) {
-            isSignUpMode = signUp;
-            authModal.classList.add('active');
-            authEmail.value = '';
-            authPassword.value = '';
-            if (signUp) {
-                modalTitle.textContent = 'Create Account';
-                modalSub.textContent = 'Sign up to sync your apps across devices.';
-                authSubmitBtn.textContent = 'Sign Up';
-                toggleText.textContent = 'Already have an account?';
-                toggleModeLink.textContent = 'Sign In';
-                forgotPasswordLink.style.display = 'none';
-            } else {
-                modalTitle.textContent = 'Sign In';
-                modalSub.textContent = 'Welcome back! Sign in to sync your apps.';
-                authSubmitBtn.textContent = 'Sign In';
-                toggleText.textContent = "Don't have an account?";
-                toggleModeLink.textContent = 'Sign Up';
-                forgotPasswordLink.style.display = 'block';
-            }
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeAuthModal() {
-            authModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // ================================================================
-        // 15. FORGOT PASSWORD
-        // ================================================================
-        forgotPasswordLink.addEventListener('click', async () => {
-            const email = authEmail.value.trim();
-            if (!email) {
-                showToast('Please enter your email address.', 'error');
-                return;
-            }
-            try {
-                await auth.sendPasswordResetEmail(email);
-                showToast('Password reset email sent! Check your inbox.', 'success');
-            } catch (err) {
-                console.error(err);
-                let msg = err.message;
-                if (err.code === 'auth/user-not-found') {
-                    msg = 'No account found with this email.';
-                } else if (err.code === 'auth/invalid-email') {
-                    msg = 'Invalid email address.';
-                }
-                showToast(msg, 'error');
-            }
-        });
-
-        // ================================================================
-        // 16. GOOGLE SIGN-IN
-        // ================================================================
-        googleSignInBtn.addEventListener('click', async () => {
-            try {
-                await auth.signInWithPopup(provider);
-                showToast('Signed in with Google! 👋', 'success');
-                closeAuthModal();
-            } catch (err) {
-                console.error(err);
-                let msg = err.message;
-                if (err.code === 'auth/popup-closed-by-user') {
-                    msg = 'Sign-in popup was closed. Please try again.';
-                } else if (err.code === 'auth/account-exists-with-different-credential') {
-                    msg = 'This email is already used with another sign-in method. Please sign in with that method.';
-                }
-                showToast(msg, 'error');
-            }
-        });
-
-        // ================================================================
-        // 17. TOAST
-        // ================================================================
-        let toastTimeout;
-
-        function showToast(message, type = 'success') {
-            toastMessage.textContent = message;
-            const icon = toast.querySelector('i');
-            if (type === 'success') {
-                icon.className = 'fas fa-check-circle';
-                icon.style.color = '#34d399';
-            } else if (type === 'error') {
-                icon.className = 'fas fa-exclamation-circle';
-                icon.style.color = '#f87171';
-            } else {
-                icon.className = 'fas fa-info-circle';
-                icon.style.color = '#60a5fa';
-            }
-            toast.classList.add('show');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // ================================================================
-        // 18. SIDEBAR FILTER
+        // 9. SIDEBAR FILTER
         // ================================================================
         sidebarItems.forEach(item => {
             item.addEventListener('click', function() {
@@ -2433,7 +1351,7 @@
         });
 
         // ================================================================
-        // 19. SEARCH
+        // 10. SEARCH
         // ================================================================
         searchInput.addEventListener('input', function() {
             searchQuery = this.value;
@@ -2450,7 +1368,7 @@
         });
 
         // ================================================================
-        // 20. BADGE COUNTS
+        // 11. BADGE COUNTS
         // ================================================================
         function updateBadgeCounts() {
             const edu = APPS.filter(a => a.category === 'Education').length;
@@ -2463,7 +1381,7 @@
         }
 
         // ================================================================
-        // 21. CREDIT NAME CLICK
+        // 12. CREDIT NAME CLICK
         // ================================================================
         creditName.addEventListener('click', function() {
             // Replace with your link:
@@ -2472,107 +1390,20 @@
         });
 
         // ================================================================
-        // 22. EVENT BINDINGS (Auth) – with improved error handling
-        // ================================================================
-        signUpBtn.addEventListener('click', () => openAuthModal(true));
-        signInBtn.addEventListener('click', () => openAuthModal(false));
-        closeModalBtn.addEventListener('click', closeAuthModal);
-        authModal.addEventListener('click', (e) => {
-            if (e.target === authModal) closeAuthModal();
-        });
-
-        toggleModeLink.addEventListener('click', () => {
-            isSignUpMode = !isSignUpMode;
-            openAuthModal(isSignUpMode);
-        });
-
-        authSubmitBtn.addEventListener('click', async () => {
-            const email = authEmail.value.trim();
-            const password = authPassword.value.trim();
-            if (!email || !password) {
-                showToast('Please fill in all fields.', 'error');
-                return;
-            }
-            if (password.length < 6) {
-                showToast('Password must be at least 6 characters.', 'error');
-                return;
-            }
-
-            try {
-                if (isSignUpMode) {
-                    const cred = await auth.createUserWithEmailAndPassword(email, password);
-                    await db.collection('users').doc(cred.user.uid).set({
-                        downloadedApps: {},
-                        displayName: ''
-                    });
-                    showToast('Account created! Welcome 🎉', 'success');
-                    closeAuthModal();
-                } else {
-                    await auth.signInWithEmailAndPassword(email, password);
-                    showToast('Signed in! 👋', 'success');
-                    closeAuthModal();
-                }
-            } catch (err) {
-                console.error(err);
-                let msg = err.message;
-
-                // --- SMART ERROR HANDLING ---
-                if (err.code === 'auth/email-already-in-use') {
-                    // Instead of showing error, auto-switch to sign-in mode
-                    showToast('This email is already registered. Please sign in instead.', 'info');
-                    // Switch the modal to sign-in mode
-                    isSignUpMode = false;
-                    modalTitle.textContent = 'Sign In';
-                    modalSub.textContent = 'Welcome back! Sign in to sync your apps.';
-                    authSubmitBtn.textContent = 'Sign In';
-                    toggleText.textContent = "Don't have an account?";
-                    toggleModeLink.textContent = 'Sign Up';
-                    forgotPasswordLink.style.display = 'block';
-                    return;
-                } else if (err.code === 'auth/user-not-found') {
-                    msg = 'No account found with this email. Please sign up first.';
-                } else if (err.code === 'auth/wrong-password') {
-                    msg = 'Incorrect password. Please try again or reset your password.';
-                } else if (err.code === 'auth/invalid-email') {
-                    msg = 'Invalid email address.';
-                } else if (err.code === 'auth/invalid-credential') {
-                    msg = 'Invalid email or password. Please try again.';
-                }
-                showToast(msg, 'error');
-            }
-        });
-
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await auth.signOut();
-                showToast('Signed out.', 'info');
-            } catch (err) {
-                showToast('Error signing out.', 'error');
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && authModal.classList.contains('active')) {
-                authSubmitBtn.click();
-            }
-            if (e.key === 'Escape') {
-                if (authModal.classList.contains('active')) closeAuthModal();
-                if (namePromptOverlay.classList.contains('active')) closeNamePrompt();
-                if (detailOverlay.classList.contains('active')) closeAppDetail();
-                if (downloadPopupOverlay.classList.contains('active')) closeDownloadPopup();
-                if (editNameOverlay.classList.contains('active')) closeEditNameModal();
-            }
-        });
-
-        // ================================================================
-        // 23. INIT
+        // 13. INIT
         // ================================================================
         updateBadgeCounts();
         renderApps();
 
-        console.log('🚀 PS Store ready with NEW Firebase project (appstore-a7594)!');
-        console.log('📱 If you try to sign up with an existing email, it will auto-switch to sign-in.');
-        console.log('🔗 Add your APK download URLs in the APPS array.');
+        console.log('🚀 PS Store ready! (No login required)');
+        console.log('📱 APK files must be in the SAME directory as this HTML file.');
+        console.log('📝 Edit the APPS array to match your exact filenames.');
+        console.log('   Example: downloadUrl: "Revision.apk"');
+        console.log('');
+        console.log('📌 If download still fails, check:');
+        console.log('   1. File name spelling (case-sensitive!)');
+        console.log('   2. File exists in the same folder');
+        console.log('   3. On GitHub Pages, files are served from the repo root');
     </script>
 
 </body>
