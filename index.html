@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PS Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Firebase SDK (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js">
+    </script>
+
+    <style>
+        /* ----- RESET & BASE ----- */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ----- APP WRAPPER ----- */
+        .app-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem 2rem;
+            background: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ----- HEADER / NAV ----- */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 0.75rem 0 1.25rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.75rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .circle-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #2563eb, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+            user-select: none;
+        }
+
+        .circle-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+        }
+
+        .logo-text span {
+            color: #2563eb;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .greeting-display {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #e2e8f0;
+            padding: 0.3rem 1rem 0.3rem 0.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #0f172a;
+        }
+
+        .greeting-display .avatar-sm {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .greeting-display .greeting-text {
+            white-space: nowrap;
+        }
+
+        .greeting-display .greeting-text .user-name-display {
+            color: #2563eb;
+        }
+
+        .btn-outline {
+            padding: 0.5rem 1.25rem;
+            border-radius: 60px;
+            border: 1.5px solid #cbd5e1;
+            background: transparent;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-outline:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        .btn-primary-solid {
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-primary-solid:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-danger-outline {
+            padding: 0.5rem 1.25rem;
+            border-radius: 60px;
+            border: 1.5px solid #fca5a5;
+            background: transparent;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #dc2626;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-danger-outline:hover {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #e2e8f0;
+            padding: 0.3rem 0.9rem 0.3rem 0.6rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .user-badge .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .user-badge .name {
+            color: #0f172a;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ----- SEARCH BAR ----- */
+        .search-bar-wrap {
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 60px;
+            padding: 0.4rem 1.2rem 0.4rem 1.5rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .search-bar:focus-within {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-bar i {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-right: 0.75rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.6rem 0;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: #0f172a;
+            outline: none;
+            min-width: 0;
+        }
+
+        .search-bar input::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-bar .clear-search {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0 0.25rem;
+            display: none;
+            transition: color 0.2s ease;
+        }
+
+        .search-bar .clear-search:hover {
+            color: #475569;
+        }
+
+        .search-bar .clear-search.visible {
+            display: block;
+        }
+
+        /* ----- LAYOUT: SIDEBAR + MAIN ----- */
+        .store-layout {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+            flex: 1;
+        }
+
+        /* ----- SIDEBAR ----- */
+        .sidebar {
+            flex: 0 0 180px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.25rem 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            height: fit-content;
+            position: sticky;
+            top: 1.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #94a3b8;
+            font-weight: 700;
+            padding: 0 0.75rem 0.6rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 0.6rem;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .sidebar-item:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .sidebar-item.active {
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .sidebar-item i {
+            width: 20px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .sidebar-item.active i {
+            color: #2563eb;
+        }
+
+        .sidebar-item .badge {
+            margin-left: auto;
+            background: #e2e8f0;
+            color: #475569;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.1rem 0.5rem;
+            border-radius: 30px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item.active .badge {
+            background: #bfdbfe;
+            color: #1d4ed8;
+        }
+
+        /* ----- MAIN CONTENT ----- */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .section-header .result-count {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* ----- APP GRID ----- */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .app-grid .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #94a3b8;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .app-grid .empty-state i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .app-grid .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        .app-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.25rem 1rem 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            animation: fadeUp 0.3s ease;
+            cursor: pointer;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+            border-color: #2563eb;
+        }
+
+        .app-card .click-hint {
+            font-size: 0.6rem;
+            color: #94a3b8;
+            margin-top: 0.2rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .app-card:hover .click-hint {
+            opacity: 1;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.7rem;
+            flex-shrink: 0;
+            background: #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-icon .emoji-placeholder {
+            font-size: 2.4rem;
+            line-height: 1;
+        }
+
+        .app-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #0f172a;
+            margin-bottom: 0.15rem;
+        }
+
+        .app-category {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.75rem;
+        }
+
+        .app-action-btn {
+            width: 100%;
+            padding: 0.45rem 0;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .btn-download {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .btn-download:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-open {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-open:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-open i {
+            color: #2563eb;
+        }
+
+        /* ================================================================
+                   APP DETAIL MODAL
+                ================================================================ */
+        .app-detail-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .app-detail-overlay.active {
+            display: flex;
+        }
+
+        .app-detail-card {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 2.2rem 2.5rem 2rem;
+            max-width: 580px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
+            animation: modalIn 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.94) translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .app-detail-card .close-detail {
+            position: absolute;
+            top: 1rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            padding: 0.25rem;
+            border-radius: 50%;
+        }
+
+        .app-detail-card .close-detail:hover {
+            color: #0f172a;
+            background: #f1f5f9;
+        }
+
+        .app-detail-layout {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .app-detail-icon {
+            width: 96px;
+            height: 96px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .app-detail-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-detail-icon .emoji-placeholder {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        .app-detail-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .app-detail-name {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.2;
+            margin-bottom: 0.2rem;
+        }
+
+        .app-detail-category {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.6rem;
+        }
+
+        .app-detail-desc {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            min-height: 2.4rem;
+        }
+
+        .app-detail-desc .placeholder-desc {
+            color: #94a3b8;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        .app-detail-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .app-detail-actions .btn {
+            padding: 0.55rem 1.8rem;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .app-detail-actions .btn-download {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .app-detail-actions .btn-download:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+        }
+
+        .app-detail-actions .btn-open {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .app-detail-actions .btn-open:hover {
+            background: #cbd5e1;
+        }
+
+        .app-detail-actions .btn-open i {
+            color: #2563eb;
+        }
+
+        @media (max-width: 540px) {
+            .app-detail-card {
+                padding: 1.5rem 1.25rem 1.5rem;
+                border-radius: 24px;
+            }
+            .app-detail-layout {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .app-detail-actions {
+                justify-content: center;
+            }
+            .app-detail-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.4rem;
+                border-radius: 20px;
+            }
+            .app-detail-name {
+                font-size: 1.3rem;
+            }
+            .app-detail-desc {
+                font-size: 0.88rem;
+            }
+        }
+
+        /* ================================================================
+                   NAME PROMPT MODAL
+                ================================================================ */
+        .name-prompt-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .name-prompt-overlay.active {
+            display: flex;
+        }
+
+        .name-prompt-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2.5rem 2.2rem 2.2rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
+            animation: modalIn 0.3s ease;
+            text-align: center;
+        }
+
+        .name-prompt-card .avatar-big {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #2563eb, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+            margin: 0 auto 1rem;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .name-prompt-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .name-prompt-card .sub {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .name-prompt-card .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .name-prompt-card label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #334155;
+            margin-bottom: 0.3rem;
+            text-align: left;
+        }
+
+        .name-prompt-card input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border 0.2s ease;
+            background: #f8fafc;
+        }
+
+        .name-prompt-card input:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: #ffffff;
+        }
+
+        .name-prompt-card .btn-submit {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 60px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .name-prompt-card .btn-submit:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .name-prompt-card .skip-link {
+            display: inline-block;
+            margin-top: 0.8rem;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .name-prompt-card .skip-link:hover {
+            color: #475569;
+        }
+
+        /* ================================================================
+                   DOWNLOAD POP-UP MODAL
+                ================================================================ */
+        .download-popup-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .download-popup-overlay.active {
+            display: flex;
+        }
+
+        .download-popup-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2.5rem 2.2rem 2.2rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
+            animation: modalIn 0.3s ease;
+            text-align: center;
+        }
+
+        .download-popup-card .popup-icon {
+            font-size: 3.5rem;
+            color: #34d399;
+            margin-bottom: 0.75rem;
+        }
+
+        .download-popup-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-popup-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .download-popup-card .btn-ok {
+            padding: 0.6rem 2.5rem;
+            border: none;
+            border-radius: 60px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .download-popup-card .btn-ok:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        /* ================================================================
+                   FOOTER
+                ================================================================ */
+        .footer-credit {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .footer-credit .heart {
+            color: #ef4444;
+        }
+
+        .footer-credit .credit-name {
+            color: #2563eb;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .footer-credit .credit-name:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* ----- AUTH MODAL (existing) ----- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 2.5rem 2.2rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            animation: modalIn 0.25s ease;
+        }
+
+        .modal-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: #0f172a;
+        }
+
+        .modal-box .sub {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-box .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal-box label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #334155;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border 0.2s ease;
+            background: #f8fafc;
+        }
+
+        .modal-box input:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: #ffffff;
+        }
+
+        .modal-box .btn-submit {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 60px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .modal-box .btn-submit:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .modal-box .toggle-mode {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .modal-box .toggle-mode a {
+            color: #2563eb;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-box .toggle-mode a:hover {
+            text-decoration: underline;
+        }
+
+        .modal-box .close-modal {
+            position: relative;
+            float: right;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #94a3b8;
+            cursor: pointer;
+            margin-top: -0.5rem;
+            margin-right: -0.5rem;
+        }
+
+        .modal-box .close-modal:hover {
+            color: #0f172a;
+        }
+
+        /* ----- TOAST ----- */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            z-index: 6000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast i {
+            font-size: 1.1rem;
+        }
+
+        /* hidden utility */
+        .hidden {
+            display: none !important;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 820px) {
+            .sidebar {
+                flex: 0 0 150px;
+            }
+            .app-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .store-layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                flex: 1;
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.2rem;
+                padding: 0.75rem;
+                border-radius: 16px;
+            }
+            .sidebar-title {
+                display: none;
+            }
+            .sidebar-item {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+                border-radius: 30px;
+                background: #f1f5f9;
+                width: auto;
+                flex: 0 0 auto;
+            }
+            .sidebar-item i {
+                display: none;
+            }
+            .sidebar-item .badge {
+                display: none;
+            }
+            .sidebar-item.active {
+                background: #2563eb;
+                color: #fff;
+            }
+            .app-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 1rem;
+            }
+            .top-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nav-actions {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+            .greeting-display {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.8rem 0.2rem 0.4rem;
+            }
+            .greeting-display .avatar-sm {
+                width: 28px;
+                height: 28px;
+                font-size: 0.7rem;
+            }
+            .modal-box {
+                padding: 1.75rem 1.25rem;
+            }
+            .circle-logo {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            .name-prompt-card {
+                padding: 1.75rem 1.25rem;
+            }
+            .app-detail-card {
+                padding: 1.25rem;
+            }
+            .download-popup-card {
+                padding: 1.75rem 1.25rem;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .app-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            .app-card {
+                padding: 1rem 0.6rem;
+            }
+            .app-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 1.6rem;
+                border-radius: 14px;
+            }
+            .app-name {
+                font-size: 0.8rem;
+            }
+            .app-action-btn {
+                font-size: 0.7rem;
+                padding: 0.35rem 0;
+            }
+            .search-bar {
+                padding: 0.3rem 0.8rem 0.3rem 1.2rem;
+            }
+            .search-bar input {
+                font-size: 0.85rem;
+                padding: 0.4rem 0;
+            }
+            .app-detail-layout {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .app-detail-icon {
+                width: 72px;
+                height: 72px;
+                font-size: 2rem;
+            }
+            .app-detail-name {
+                font-size: 1.2rem;
+            }
+            .app-detail-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper">
+
+        <!-- ===== TOP NAV ===== -->
+        <header class="top-nav">
+            <div class="logo-area">
+                <div class="circle-logo">PS</div>
+                <span class="logo-text"><span>PS</span> Store</span>
+            </div>
+            <div class="nav-actions" id="navActions">
+                <!-- Greeting display -->
+                <div class="greeting-display hidden" id="greetingDisplay">
+                    <span class="avatar-sm" id="greetingAvatar">P</span>
+                    <span class="greeting-text" id="greetingText">Good Morning, <span class="user-name-display" id="greetingName">User</span>!</span>
+                </div>
+
+                <button class="btn-outline" id="signUpBtn"><i class="fas fa-user-plus"></i> Sign Up</button>
+                <button class="btn-primary-solid" id="signInBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+
+                <div class="user-badge hidden" id="userBadge">
+                    <span class="avatar" id="userAvatar">P</span>
+                    <span class="name" id="userName">User</span>
+                    <button class="btn-danger-outline" id="logoutBtn" style="padding:0.25rem 0.8rem;font-size:0.7rem;border-color:#e2e8f0;color:#64748b;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== SEARCH BAR ===== -->
+        <div class="search-bar-wrap">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search apps... (e.g. Revision, Tracker)" autocomplete="off" />
+                <button class="clear-search" id="clearSearchBtn"><i class="fas fa-times-circle"></i></button>
+            </div>
+        </div>
+
+        <!-- ===== STORE LAYOUT ===== -->
+        <div class="store-layout">
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-title">CATEGORIES</div>
+                <button class="sidebar-item active" data-filter="all">
+                    <i class="fas fa-home"></i> Home
+                    <span class="badge" id="allCount">6</span>
+                </button>
+                <button class="sidebar-item" data-filter="education">
+                    <i class="fas fa-graduation-cap"></i> Education
+                    <span class="badge" id="eduCount">4</span>
+                </button>
+                <button class="sidebar-item" data-filter="game">
+                    <i class="fas fa-gamepad"></i> Game
+                    <span class="badge" id="gameCount">0</span>
+                </button>
+                <button class="sidebar-item" data-filter="tools">
+                    <i class="fas fa-tools"></i> Tools
+                    <span class="badge" id="toolsCount">2</span>
+                </button>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main class="main-content">
+
+                <div class="section-header">
+                    <h2 id="sectionTitle">🔥 All Apps</h2>
+                    <span class="result-count" id="resultCount">6 apps</span>
+                </div>
+                <div class="app-grid" id="appGrid">
+                    <!-- dynamically rendered -->
+                </div>
+
+                <!-- TOPIC / extra -->
+                <div style="margin-top:0.5rem;padding:0.75rem 1rem;background:#ffffff;border-radius:16px;border:1px solid #e2e8f0;display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;">
+                    <span style="font-weight:600;font-size:0.8rem;color:#475569;"><i class="fas fa-tag" style="color:#2563eb;margin-right:0.4rem;"></i> TOPIC</span>
+                    <span style="font-size:0.85rem;color:#0f172a;background:#eff6ff;padding:0.2rem 0.8rem;border-radius:30px;">Challenge: special events</span>
+                    <span style="font-size:0.85rem;color:#0f172a;background:#eff6ff;padding:0.2rem 0.8rem;border-radius:30px;">Play with a unique art</span>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- ===== FOOTER CREDIT ===== -->
+        <div class="footer-credit">
+            built with <span class="heart">❤️</span> by
+            <span class="credit-name" id="creditName">PRIYANSHU SINGH</span>
+        </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- ===== APP DETAIL MODAL ===== -->
+    <!-- ================================================================ -->
+    <div class="app-detail-overlay" id="appDetailOverlay">
+        <div class="app-detail-card">
+            <button class="close-detail" id="closeDetailBtn"><i class="fas fa-times"></i></button>
+            <div class="app-detail-layout">
+                <div class="app-detail-icon" id="detailIcon">
+                    <span class="emoji-placeholder">📚</span>
+                </div>
+                <div class="app-detail-info">
+                    <div class="app-detail-name" id="detailName">App Name</div>
+                    <div class="app-detail-category" id="detailCategory">Category</div>
+                    <div class="app-detail-desc" id="detailDesc">
+                        <span class="placeholder-desc">Description will be added soon...</span>
+                    </div>
+                    <div class="app-detail-actions">
+                        <button class="btn btn-download" id="detailActionBtn">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- ===== NAME PROMPT MODAL (first login) ===== -->
+    <!-- ================================================================ -->
+    <div class="name-prompt-overlay" id="namePromptOverlay">
+        <div class="name-prompt-card">
+            <div class="avatar-big"><i class="fas fa-user-plus"></i></div>
+            <h3>Welcome! 👋</h3>
+            <p class="sub">What should we call you? This name will appear in your greeting.</p>
+            <div class="form-group">
+                <label for="nameInput">Your Name</label>
+                <input type="text" id="nameInput" placeholder="e.g. Aman" maxlength="30" autocomplete="off" />
+            </div>
+            <button class="btn-submit" id="saveNameBtn"><i class="fas fa-check"></i> Save Name</button>
+            <div class="skip-link" id="skipNameBtn">Skip for now</div>
+        </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- ===== DOWNLOAD POP-UP MODAL ===== -->
+    <!-- ================================================================ -->
+    <div class="download-popup-overlay" id="downloadPopupOverlay">
+        <div class="download-popup-card">
+            <div class="popup-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Download Started!</h3>
+            <p>The APK file is being downloaded to your device.<br />
+               Please open your <strong>Downloads</strong> folder and tap the file to install it.</p>
+            <button class="btn-ok" id="downloadPopupOkBtn">Got it</button>
+        </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- ===== AUTH MODAL ===== -->
+    <!-- ================================================================ -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-box">
+            <button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></button>
+            <h3 id="modalTitle">Sign In</h3>
+            <p class="sub" id="modalSub">Welcome back! Sign in to sync your apps.</p>
+
+            <div class="form-group">
+                <label for="authEmail">Email</label>
+                <input type="email" id="authEmail" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+                <label for="authPassword">Password</label>
+                <input type="password" id="authPassword" placeholder="••••••••" />
+            </div>
+
+            <button class="btn-submit" id="authSubmitBtn">Sign In</button>
+
+            <div class="toggle-mode">
+                <span id="toggleText">Don't have an account?</span>
+                <a id="toggleModeLink">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color:#34d399;"></i>
+        <span id="toastMessage">Done!</span>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- ===== JAVASCRIPT ===== -->
+    <!-- ================================================================ -->
+    <script>
+        // ================================================================
+        // 1. APP DATA (6 apps) with download URLs
+        // ================================================================
+        const APPS = [{
+            id: 'revision',
+            name: 'Revision',
+            category: 'Education',
+            emoji: '📚',
+            color: '#FF6B6B',
+            description: 'Quick revision notes and flashcards for exam preparation.',
+            // Replace with your actual APK download URL
+            downloadUrl: '' // e.g. 'https://your-server.com/apps/revision.apk'
+        }, {
+            id: 'myMistakes',
+            name: 'My Mistakes',
+            category: 'Education',
+            emoji: '📝',
+            color: '#4ECDC4',
+            description: 'Track and analyse your mistakes to improve performance.',
+            downloadUrl: ''
+        }, {
+            id: 'flashRevision',
+            name: 'Flash Revision',
+            category: 'Education',
+            emoji: '⚡',
+            color: '#45B7D1',
+            description: 'Fast-paced flashcard revision for last-minute prep.',
+            downloadUrl: ''
+        }, {
+            id: 'lectures11th',
+            name: '11th Lectures',
+            category: 'Education',
+            emoji: '📖',
+            color: '#96CEB4',
+            description: 'Complete video lectures for 11th standard curriculum.',
+            downloadUrl: ''
+        }, {
+            id: 'myTracker',
+            name: 'MyTracker',
+            category: 'Tools',
+            emoji: '📍',
+            color: '#FFD93D',
+            description: 'Track your daily progress, tasks, and study hours.',
+            downloadUrl: ''
+        }, {
+            id: 'timeTable',
+            name: 'Time-Table',
+            category: 'Tools',
+            emoji: '⏰',
+            color: '#DDA0DD',
+            description: 'Smart timetable generator for efficient study planning.',
+            downloadUrl: ''
+        }];
+
+        const CATEGORY_MAP = {
+            'education': 'Education',
+            'game': 'Game',
+            'tools': 'Tools'
+        };
+
+        // ================================================================
+        // 2. FIREBASE CONFIG
+        // ================================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyBhLhJq1MiFmILQv3xMdas12AwIxXLga60",
+            authDomain: "studytimetable-67ded.firebaseapp.com",
+            projectId: "studytimetable-67ded",
+            storageBucket: "studytimetable-67ded.firebasestorage.app",
+            messagingSenderId: "820472729807",
+            appId: "1:820472729807:web:9ef769bfabdf1db1dae7ba",
+            measurementId: "G-X4W2ZJ8YHC"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // ================================================================
+        // 3. STATE
+        // ================================================================
+        let currentUser = null;
+        let downloadedApps = {};
+        let isSignUpMode = false;
+        let currentFilter = 'all';
+        let searchQuery = '';
+        let userDisplayName = '';
+        let isNamePromptOpen = false;
+
+        // ================================================================
+        // 4. DOM REFS
+        // ================================================================
+        const appGrid = document.getElementById('appGrid');
+        const sectionTitle = document.getElementById('sectionTitle');
+        const resultCount = document.getElementById('resultCount');
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+        // Detail modal
+        const detailOverlay = document.getElementById('appDetailOverlay');
+        const closeDetailBtn = document.getElementById('closeDetailBtn');
+        const detailIcon = document.getElementById('detailIcon');
+        const detailName = document.getElementById('detailName');
+        const detailCategory = document.getElementById('detailCategory');
+        const detailDesc = document.getElementById('detailDesc');
+        const detailActionBtn = document.getElementById('detailActionBtn');
+        let currentDetailAppId = null;
+
+        // Name prompt
+        const namePromptOverlay = document.getElementById('namePromptOverlay');
+        const nameInput = document.getElementById('nameInput');
+        const saveNameBtn = document.getElementById('saveNameBtn');
+        const skipNameBtn = document.getElementById('skipNameBtn');
+
+        // Download popup
+        const downloadPopupOverlay = document.getElementById('downloadPopupOverlay');
+        const downloadPopupOkBtn = document.getElementById('downloadPopupOkBtn');
+
+        // Greeting
+        const greetingDisplay = document.getElementById('greetingDisplay');
+        const greetingAvatar = document.getElementById('greetingAvatar');
+        const greetingText = document.getElementById('greetingText');
+        const greetingName = document.getElementById('greetingName');
+
+        // Auth
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signInBtn = document.getElementById('signInBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userBadge = document.getElementById('userBadge');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const authModal = document.getElementById('authModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSub = document.getElementById('modalSub');
+        const authEmail = document.getElementById('authEmail');
+        const authPassword = document.getElementById('authPassword');
+        const authSubmitBtn = document.getElementById('authSubmitBtn');
+        const toggleModeLink = document.getElementById('toggleModeLink');
+        const toggleText = document.getElementById('toggleText');
+
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const allCount = document.getElementById('allCount');
+        const eduCount = document.getElementById('eduCount');
+        const gameCount = document.getElementById('gameCount');
+        const toolsCount = document.getElementById('toolsCount');
+
+        const creditName = document.getElementById('creditName');
+
+        // ================================================================
+        // 5. GREETING HELPER
+        // ================================================================
+        function getTimeBasedGreeting() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) return 'Good Morning';
+            if (hour >= 12 && hour < 17) return 'Good Afternoon';
+            if (hour >= 17 && hour < 21) return 'Good Evening';
+            return 'Good Night';
+        }
+
+        function updateGreeting(name) {
+            if (!name || name.trim() === '') {
+                greetingDisplay.classList.add('hidden');
+                return;
+            }
+            const greeting = getTimeBasedGreeting();
+            greetingName.textContent = name;
+            greetingText.innerHTML = `${greeting}, <span class="user-name-display">${name}</span>!`;
+            greetingAvatar.textContent = name.charAt(0).toUpperCase();
+            greetingDisplay.classList.remove('hidden');
+        }
+
+        // ================================================================
+        // 6. RENDER APPS
+        // ================================================================
+        function getFilteredApps() {
+            let filtered = [...APPS];
+            if (currentFilter !== 'all') {
+                const cat = CATEGORY_MAP[currentFilter];
+                if (cat) filtered = filtered.filter(app => app.category === cat);
+            }
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.trim().toLowerCase();
+                filtered = filtered.filter(app =>
+                    app.name.toLowerCase().includes(q) ||
+                    app.category.toLowerCase().includes(q)
+                );
+            }
+            return filtered;
+        }
+
+        function renderApps() {
+            const filtered = getFilteredApps();
+            const total = filtered.length;
+
+            let title = '🔥 All Apps';
+            if (currentFilter === 'education') title = '📚 Education';
+            else if (currentFilter === 'game') title = '🎮 Game';
+            else if (currentFilter === 'tools') title = '🛠️ Tools';
+            if (searchQuery.trim() !== '') {
+                title = `🔍 Results for "${searchQuery.trim()}"`;
+            }
+            sectionTitle.textContent = title;
+            resultCount.textContent = `${total} app${total !== 1 ? 's' : ''}`;
+
+            if (total === 0) {
+                appGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>No apps found. Try a different search or filter.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            appGrid.innerHTML = filtered.map(app => createAppCard(app)).join('');
+
+            document.querySelectorAll('.app-card').forEach(card => {
+                const appId = card.dataset.appId;
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.app-action-btn')) return;
+                    openAppDetail(appId);
+                });
+
+                const btn = card.querySelector('.app-action-btn');
+                if (btn) {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        handleAppAction(appId);
+                    });
+                }
+            });
+        }
+
+        function createAppCard(app) {
+            const isDownloaded = downloadedApps[app.id] || false;
+            const btnClass = isDownloaded ? 'btn-open' : 'btn-download';
+            const btnIcon = isDownloaded ? '<i class="fas fa-play"></i>' : '<i class="fas fa-download"></i>';
+            const btnText = isDownloaded ? 'Open' : 'Download';
+
+            let iconHtml;
+            if (app.imageUrl && app.imageUrl.trim() !== '') {
+                iconHtml = `<img src="${app.imageUrl}" alt="${app.name}" />`;
+            } else {
+                iconHtml = `<span class="emoji-placeholder">${app.emoji}</span>`;
+            }
+
+            return `
+                <div class="app-card" data-app-id="${app.id}">
+                    <div class="app-icon" style="background:${app.color}">
+                        ${iconHtml}
+                    </div>
+                    <div class="app-name">${app.name}</div>
+                    <div class="app-category">${app.category}</div>
+                    <button class="app-action-btn ${btnClass}">${btnIcon} ${btnText}</button>
+                    <div class="click-hint"><i class="fas fa-info-circle"></i> tap for details</div>
+                </div>
+            `;
+        }
+
+        // ================================================================
+        // 7. APP DETAIL MODAL
+        // ================================================================
+        function openAppDetail(appId) {
+            const app = APPS.find(a => a.id === appId);
+            if (!app) return;
+            currentDetailAppId = appId;
+
+            let iconHtml;
+            if (app.imageUrl && app.imageUrl.trim() !== '') {
+                iconHtml = `<img src="${app.imageUrl}" alt="${app.name}" />`;
+            } else {
+                iconHtml = `<span class="emoji-placeholder">${app.emoji}</span>`;
+            }
+            detailIcon.innerHTML = iconHtml;
+            detailIcon.style.background = app.color;
+
+            detailName.textContent = app.name;
+            detailCategory.textContent = app.category;
+
+            if (app.description && app.description.trim() !== '') {
+                detailDesc.innerHTML = app.description;
+            } else {
+                detailDesc.innerHTML = `<span class="placeholder-desc">Description will be added soon...</span>`;
+            }
+
+            const isDownloaded = downloadedApps[app.id] || false;
+            if (isDownloaded) {
+                detailActionBtn.className = 'btn btn-open';
+                detailActionBtn.innerHTML = '<i class="fas fa-play"></i> Open';
+            } else {
+                detailActionBtn.className = 'btn btn-download';
+                detailActionBtn.innerHTML = '<i class="fas fa-download"></i> Download';
+            }
+
+            const newBtn = detailActionBtn.cloneNode(true);
+            detailActionBtn.parentNode.replaceChild(newBtn, detailActionBtn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleAppAction(appId);
+                // Update button after action (but we'll update via renderApps anyway)
+            });
+
+            detailOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAppDetail() {
+            detailOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            currentDetailAppId = null;
+        }
+
+        closeDetailBtn.addEventListener('click', closeAppDetail);
+        detailOverlay.addEventListener('click', (e) => {
+            if (e.target === detailOverlay) closeAppDetail();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAppDetail();
+        });
+
+        // ================================================================
+        // 8. APP ACTION (Download / Open) with APK download
+        // ================================================================
+        function handleAppAction(appId) {
+            if (!currentUser) {
+                showToast('Please sign in to download or open apps.', 'info');
+                openAuthModal(false);
+                return;
+            }
+
+            const app = APPS.find(a => a.id === appId);
+            if (!app) return;
+
+            const isDownloaded = downloadedApps[appId] || false;
+
+            if (isDownloaded) {
+                // OPEN – here we could try to launch the app via intent, but for now just show a message
+                showToast(`Opening ${app.name}... 🚀`, 'success');
+                // You can replace with a deep link: window.location.href = 'your-app-scheme://'
+                return;
+            }
+
+            // DOWNLOAD – trigger APK download
+            if (app.downloadUrl && app.downloadUrl.trim() !== '') {
+                // Trigger download via anchor
+                const link = document.createElement('a');
+                link.href = app.downloadUrl;
+                link.download = `${app.name}.apk`; // optional filename
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Show pop-up after download starts
+                showDownloadPopup();
+
+                // Mark as downloaded in Firestore and local state
+                const userRef = db.collection('users').doc(currentUser.uid);
+                userRef.update({
+                    [`downloadedApps.${appId}`]: true
+                }).then(() => {
+                    downloadedApps[appId] = true;
+                    renderApps();
+                    // Also update detail button if open
+                    if (currentDetailAppId === appId) {
+                        const btn = document.querySelector('#detailActionBtn');
+                        if (btn) {
+                            btn.className = 'btn btn-open';
+                            btn.innerHTML = '<i class="fas fa-play"></i> Open';
+                        }
+                    }
+                }).catch(err => {
+                    console.error('Error saving download status:', err);
+                    // Still keep local state true? We'll revert on error? But download already started.
+                    // We'll just show toast.
+                    showToast('App downloaded but status not saved. Try again.', 'error');
+                });
+
+                showToast(`Downloading ${app.name}...`, 'info');
+            } else {
+                showToast('Download URL not configured for this app.', 'error');
+            }
+        }
+
+        // ================================================================
+        // 9. DOWNLOAD POP-UP
+        // ================================================================
+        function showDownloadPopup() {
+            downloadPopupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDownloadPopup() {
+            downloadPopupOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        downloadPopupOkBtn.addEventListener('click', closeDownloadPopup);
+        downloadPopupOverlay.addEventListener('click', (e) => {
+            if (e.target === downloadPopupOverlay) closeDownloadPopup();
+        });
+
+        // ================================================================
+        // 10. FIREBASE AUTH & SYNC
+        // ================================================================
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                currentUser = user;
+                updateUIForLoggedIn(user);
+                subscribeToUserData(user.uid);
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.displayName && data.displayName.trim() !== '') {
+                            userDisplayName = data.displayName;
+                            updateGreeting(userDisplayName);
+                        } else {
+                            showNamePrompt();
+                        }
+                    } else {
+                        showNamePrompt();
+                    }
+                }).catch(err => {
+                    console.error('Error checking name:', err);
+                });
+            } else {
+                currentUser = null;
+                downloadedApps = {};
+                userDisplayName = '';
+                updateUIForLoggedOut();
+                renderApps();
+                greetingDisplay.classList.add('hidden');
+            }
+        });
+
+        function subscribeToUserData(uid) {
+            const userRef = db.collection('users').doc(uid);
+            userRef.onSnapshot(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    downloadedApps = data.downloadedApps || {};
+                    if (data.displayName && data.displayName.trim() !== '') {
+                        userDisplayName = data.displayName;
+                        updateGreeting(userDisplayName);
+                    }
+                } else {
+                    userRef.set({ downloadedApps: {} }).catch(err => console.error(err));
+                    downloadedApps = {};
+                }
+                renderApps();
+            }, err => {
+                console.error('Firestore listener error:', err);
+                userRef.get().then(doc => {
+                    if (doc.exists) {
+                        downloadedApps = doc.data().downloadedApps || {};
+                        if (doc.data().displayName) {
+                            userDisplayName = doc.data().displayName;
+                            updateGreeting(userDisplayName);
+                        }
+                    } else {
+                        downloadedApps = {};
+                    }
+                    renderApps();
+                }).catch(e => console.error(e));
+            });
+        }
+
+        // ================================================================
+        // 11. NAME PROMPT
+        // ================================================================
+        function showNamePrompt() {
+            if (isNamePromptOpen) return;
+            isNamePromptOpen = true;
+            namePromptOverlay.classList.add('active');
+            nameInput.value = '';
+            nameInput.focus();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNamePrompt() {
+            namePromptOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            isNamePromptOpen = false;
+        }
+
+        function saveUserName() {
+            const name = nameInput.value.trim();
+            if (!name) {
+                showToast('Please enter a name.', 'error');
+                nameInput.focus();
+                return;
+            }
+            if (!currentUser) {
+                showToast('Please sign in first.', 'error');
+                closeNamePrompt();
+                return;
+            }
+
+            const userRef = db.collection('users').doc(currentUser.uid);
+            userRef.update({
+                displayName: name
+            }).then(() => {
+                userDisplayName = name;
+                updateGreeting(name);
+                closeNamePrompt();
+                showToast(`Welcome, ${name}! 🎉`, 'success');
+                userAvatar.textContent = name.charAt(0).toUpperCase();
+            }).catch(err => {
+                console.error('Error saving name:', err);
+                userRef.set({ displayName: name, downloadedApps: downloadedApps }, { merge: true })
+                    .then(() => {
+                        userDisplayName = name;
+                        updateGreeting(name);
+                        closeNamePrompt();
+                        showToast(`Welcome, ${name}! 🎉`, 'success');
+                        userAvatar.textContent = name.charAt(0).toUpperCase();
+                    })
+                    .catch(e => {
+                        console.error('Error setting name:', e);
+                        showToast('Error saving name. Try again.', 'error');
+                    });
+            });
+        }
+
+        saveNameBtn.addEventListener('click', saveUserName);
+        nameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') saveUserName();
+        });
+        skipNameBtn.addEventListener('click', () => {
+            closeNamePrompt();
+            if (currentUser && currentUser.email) {
+                const fallback = currentUser.email.split('@')[0];
+                userDisplayName = fallback;
+                updateGreeting(fallback);
+                db.collection('users').doc(currentUser.uid).update({
+                    displayName: fallback
+                }).catch(() => {});
+            }
+            showToast('You can set your name later.', 'info');
+        });
+
+        // ================================================================
+        // 12. UI UPDATES
+        // ================================================================
+        function updateUIForLoggedIn(user) {
+            signUpBtn.classList.add('hidden');
+            signInBtn.classList.add('hidden');
+            userBadge.classList.remove('hidden');
+            const name = user.displayName || user.email || 'User';
+            userName.textContent = name;
+            userAvatar.textContent = name.charAt(0).toUpperCase();
+            authModal.classList.remove('active');
+            if (userDisplayName) {
+                updateGreeting(userDisplayName);
+            }
+        }
+
+        function updateUIForLoggedOut() {
+            signUpBtn.classList.remove('hidden');
+            signInBtn.classList.remove('hidden');
+            userBadge.classList.add('hidden');
+            greetingDisplay.classList.add('hidden');
+            renderApps();
+        }
+
+        // ================================================================
+        // 13. AUTH MODAL
+        // ================================================================
+        function openAuthModal(signUp) {
+            isSignUpMode = signUp;
+            authModal.classList.add('active');
+            authEmail.value = '';
+            authPassword.value = '';
+            if (signUp) {
+                modalTitle.textContent = 'Create Account';
+                modalSub.textContent = 'Sign up to sync your apps across devices.';
+                authSubmitBtn.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account?';
+                toggleModeLink.textContent = 'Sign In';
+            } else {
+                modalTitle.textContent = 'Sign In';
+                modalSub.textContent = 'Welcome back! Sign in to sync your apps.';
+                authSubmitBtn.textContent = 'Sign In';
+                toggleText.textContent = "Don't have an account?";
+                toggleModeLink.textContent = 'Sign Up';
+            }
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ================================================================
+        // 14. TOAST
+        // ================================================================
+        let toastTimeout;
+
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            const icon = toast.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+                icon.style.color = '#34d399';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+                icon.style.color = '#f87171';
+            } else {
+                icon.className = 'fas fa-info-circle';
+                icon.style.color = '#60a5fa';
+            }
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ================================================================
+        // 15. SIDEBAR FILTER
+        // ================================================================
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function() {
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderApps();
+            });
+        });
+
+        // ================================================================
+        // 16. SEARCH
+        // ================================================================
+        searchInput.addEventListener('input', function() {
+            searchQuery = this.value;
+            clearSearchBtn.classList.toggle('visible', searchQuery.trim() !== '');
+            renderApps();
+        });
+
+        clearSearchBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            searchQuery = '';
+            this.classList.remove('visible');
+            renderApps();
+            searchInput.focus();
+        });
+
+        // ================================================================
+        // 17. BADGE COUNTS
+        // ================================================================
+        function updateBadgeCounts() {
+            const edu = APPS.filter(a => a.category === 'Education').length;
+            const game = APPS.filter(a => a.category === 'Game').length;
+            const tools = APPS.filter(a => a.category === 'Tools').length;
+            allCount.textContent = APPS.length;
+            eduCount.textContent = edu;
+            gameCount.textContent = game;
+            toolsCount.textContent = tools;
+        }
+
+        // ================================================================
+        // 18. CREDIT NAME CLICK
+        // ================================================================
+        creditName.addEventListener('click', function() {
+            // Replace with your link:
+            // window.open('https://your-link.com', '_blank');
+            showToast('🔗 Add your link in the code (creditName click handler)', 'info');
+        });
+
+        // ================================================================
+        // 19. EVENT BINDINGS (Auth)
+        // ================================================================
+        signUpBtn.addEventListener('click', () => openAuthModal(true));
+        signInBtn.addEventListener('click', () => openAuthModal(false));
+        closeModalBtn.addEventListener('click', closeAuthModal);
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) closeAuthModal();
+        });
+
+        toggleModeLink.addEventListener('click', () => {
+            isSignUpMode = !isSignUpMode;
+            openAuthModal(isSignUpMode);
+        });
+
+        authSubmitBtn.addEventListener('click', async () => {
+            const email = authEmail.value.trim();
+            const password = authPassword.value.trim();
+            if (!email || !password) {
+                showToast('Please fill in all fields.', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters.', 'error');
+                return;
+            }
+
+            try {
+                if (isSignUpMode) {
+                    const cred = await auth.createUserWithEmailAndPassword(email, password);
+                    await db.collection('users').doc(cred.user.uid).set({
+                        downloadedApps: {},
+                        displayName: ''
+                    });
+                    showToast('Account created! Welcome 🎉', 'success');
+                } else {
+                    await auth.signInWithEmailAndPassword(email, password);
+                    showToast('Signed in! 👋', 'success');
+                }
+                closeAuthModal();
+            } catch (err) {
+                console.error(err);
+                let msg = err.message;
+                if (err.code === 'auth/user-not-found') msg = 'No account found with this email.';
+                else if (err.code === 'auth/wrong-password') msg = 'Incorrect password.';
+                else if (err.code === 'auth/email-already-in-use') msg = 'Email already in use.';
+                else if (err.code === 'auth/invalid-email') msg = 'Invalid email address.';
+                showToast(msg, 'error');
+            }
+        });
+
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await auth.signOut();
+                showToast('Signed out.', 'info');
+            } catch (err) {
+                showToast('Error signing out.', 'error');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && authModal.classList.contains('active')) {
+                authSubmitBtn.click();
+            }
+            if (e.key === 'Escape') {
+                if (authModal.classList.contains('active')) closeAuthModal();
+                if (namePromptOverlay.classList.contains('active')) closeNamePrompt();
+                if (detailOverlay.classList.contains('active')) closeAppDetail();
+                if (downloadPopupOverlay.classList.contains('active')) closeDownloadPopup();
+            }
+        });
+
+        // ================================================================
+        // 20. INIT
+        // ================================================================
+        updateBadgeCounts();
+        renderApps();
+
+        console.log('🚀 PS Store ready!');
+        console.log('📱 To enable APK downloads, add a downloadUrl to each app in the APPS array.');
+        console.log('🔗 Example: downloadUrl: "https://your-server.com/apps/revision.apk"');
+    </script>
+
+</body>
+</html>
