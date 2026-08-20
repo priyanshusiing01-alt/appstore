@@ -964,7 +964,6 @@
                 <span style="font-size:0.8rem;color:#94a3b8;font-weight:500;">
                     <i class="fas fa-download" style="color:#2563eb;"></i> Free Apps
                 </span>
-                <!-- 🔗 Official Website Button (link बाद में डालें) -->
                 <a href="https://Priyanshusingh.pages.dev" target="_blank" class="btn-website" id="officialWebsiteBtn">
                     <i class="fas fa-globe"></i> Official Website
                 </a>
@@ -987,11 +986,11 @@
                 <div class="sidebar-title">CATEGORIES</div>
                 <button class="sidebar-item active" data-filter="all">
                     <i class="fas fa-home"></i> Home
-                    <span class="badge" id="allCount">6</span>
+                    <span class="badge" id="allCount">7</span>
                 </button>
                 <button class="sidebar-item" data-filter="education">
                     <i class="fas fa-graduation-cap"></i> Education
-                    <span class="badge" id="eduCount">4</span>
+                    <span class="badge" id="eduCount">5</span>
                 </button>
                 <button class="sidebar-item" data-filter="game">
                     <i class="fas fa-gamepad"></i> Game
@@ -1007,7 +1006,7 @@
 
                 <div class="section-header">
                     <h2 id="sectionTitle">🔥 All Apps</h2>
-                    <span class="result-count" id="resultCount">6 apps</span>
+                    <span class="result-count" id="resultCount">7 apps</span>
                 </div>
                 <div class="app-grid" id="appGrid">
                     <!-- dynamically rendered -->
@@ -1117,6 +1116,14 @@
             description: 'A dedicated educational portal providing Class 11 JEE aspirants free access to premium Physics Wallah (PW) lectures, structured chapter-wise notes, and study resources designed to streamline daily learning and revision for competitive exams.',
             downloadUrl: '11th Lectures.apk'
         }, {
+            id: 'hwRecords',
+            name: 'HW Records',
+            category: 'Education',
+            emoji: '📋',
+            color: '#6366F1',
+            description: 'A powerful homework tracking and management system designed for students to record, track, and monitor their daily homework progress. It features real-time sync across devices, automatic backup, detailed analytics, and an intuitive dashboard to view completion rates, subject-wise progress, and weekly/monthly trends.',
+            downloadUrl: 'HW Records.apk'
+        }, {
             id: 'myTracker',
             name: 'MyTracker',
             category: 'Tools',
@@ -1132,9 +1139,7 @@
             color: '#DDA0DD',
             description: 'Smart timetable generator for efficient study planning.',
             downloadUrl: 'Time Table.apk'
-        },
-        // ===== NEW APP: CLOCK =====
-        {
+        }, {
             id: 'clock',
             name: 'Clock',
             category: 'Tools',
@@ -1464,20 +1469,18 @@
         }
 
         // ================================================================
-        // 12. CREDIT NAME CLICK
+        // 12. CREDIT NAME CLICK - Redirect to Website
         // ================================================================
-        creditName.addEventListener('https://Priyanshusingh.pages.dev', function() {
-            showToast('🔗 Add your link in the code (creditName click handler)', 'info');
+        creditName.addEventListener('click', function() {
+            window.open('https://Priyanshusingh.pages.dev', '_blank');
         });
 
         // ================================================================
-        // 13. OFFICIAL WEBSITE BUTTON (बाद में लिंक डालें)
+        // 13. OFFICIAL WEBSITE BUTTON
         // ================================================================
         officialWebsiteBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            // यहाँ अपनी लिंक डालें, उदाहरण:
-             window.open('https://Priyanshusingh.pages.dev', '_blank');
-            showToast('🌐 Official Website link will be added soon!', 'info');
+            window.open('https://Priyanshusingh.pages.dev', '_blank');
         });
 
         // ================================================================
@@ -1486,7 +1489,7 @@
         updateBadgeCounts();
         renderApps();
 
-        console.log('🚀 PS Store ready with High Alert & Official Website button!');
+        console.log('🚀 PS Store ready with HW Records app!');
         console.log('📱 APK files must be in the SAME directory as this HTML.');
         console.log('📝 Edit the APPS array to match your exact filenames.');
     </script>
